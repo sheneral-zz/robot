@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+
+<canvas id="world" style="border:2px solid #000000;">
+</canvas>
+
+<p id="stuff"></p>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script type="text/javascript" src="position_list.js"></script>
+<script type="text/javascript" src="worldTemplateMoveRobot.js"></script>
+<script type="text/javascript" src="robot.js"></script>
+<script type="text/javascript" src="raceWorld2.js"></script>
+<script type="text/javascript" src="moveCircleXY2.js"></script>
+<script type="text/javascript" src="sonarLengths.js"></script>
+
+
+<button id="pauseBtn" onclick="">Start</button>
+<button id="stepBtn" onclick="">Step</button>
+<button id="rewindBtn" onclick="">Rewind</button>
+<button id="reloadBtn" onclick="">Reload</button> 
+
+<script>
+var ctx; 
+drawRobot(); //draws first frame of world + robot
+
+var rewind = 1;
+
+var pauseButton = $("#pauseBtn");
+var startButton = $("#startBtn");
+var stepButton = $("#stepBtn");
+var rewindButton = $("#rewindBtn");
+var reloadButton = $("#reloadBtn");
+
+pauseButton.click(function(){
+	if ($(this).text()== "Pause" && i!=XYATs.length-1){
+	//if robot is stopped at last position, pause button won't work
+		$(this).text("Start");
+		clearTimeout(drawLoop);
+	} else {
+		$(this).text("Pause");
+		draw();
+	}
+});
+
+stepButton.click(function(){
+	if (i+rewind < XYATs.length && i+rewind >= 0) {
+		i=i+rewind;
+	}
+	drawRobot();
+});
+
+rewindButton.click(function(){
+	if ($(this).text()=="Rewind"){
+		rewind=-1;
+		$(this).text("Forward");
+	} else {
+		rewind=1;
+		$(this).text("Rewind");
+	}
+})
+	
+reloadButton.click(function(){
+	if (i == XYATs.length-1){ //if robot stopped at last position
+		$(pauseButton).text("Start");
+	}
+	
+	i=0;
+	drawRobot();
+
+});
+
+</script>
+
+</body>
+</html>
+
